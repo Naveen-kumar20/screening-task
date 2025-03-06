@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/4637/4637449.png" type="image/x-icon">
+    <title>Greeting page</title>
+
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: sans-serif;
+        }
+        html{
+            width: 100%;
+            height: 100%;
+        }
+        body{
+            background-color: #272757;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        section{
+            width: 50%;
+            min-height: 50%;
+            border-radius: 20px;
+            background-color: #151441;
+            color: #8686AC;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 20px;
+        }
+        h1{
+            font-size: 3rem;
+            width: 100%;
+            text-align: center;
+        }
+        input{
+            width: 60%;
+            height: 40px;
+            border-radius: 20px;
+            padding-inline: 10px;
+            text-align: center;
+        }
+        button{
+            border: none;
+            outline: none;
+            text-decoration: none;
+            width: 30%;
+            height: 33px;
+            border-radius: 20px;
+            background-color: #7575b6;
+            transition-duration: .5s;
+            cursor: pointer;
+        &:hover{
+            transform: scale(1.1);
+        }
+        }
+        p{
+            font-size: large;
+            max-width: 100%;
+            text-align: center;
+        }
+
+        @media (max-width:530px) {
+            section{
+                width: 100%;
+                margin-inline: 10px;
+            }
+            input{
+                width: 100%;
+            }
+            button{
+                width: 80%;
+            }
+        }
+        @media (max-width:714px) {
+            input{
+                width: 100%;
+            }
+            button{
+                width: 80%;
+            }
+            
+        }
+
+
+        
+    </style>
+
+</head>
+<body>
+    <section>
+        <h1>Greeting Page</h1>
+        <input type="text" id="name" placeholder="Enter name" required>
+        <button onclick="getGreeting()">Get greetings</button>
+        <p id="greeting-message"></p>
+    </section>
+
+    <script>
+        async function getGreeting(){
+            const name = document.getElementById('name').value;
+            const messageEl = document.getElementById('greeting-message');
+
+            if(!name){
+                messageEl.textContent = "Error: Name is required.";
+                messageEl.style.color = "red";
+                nameInput.focus();
+                return;
+            }
+            if(name){
+                messageEl.style.color = "#8686AC";
+            }
+            try {
+                const apiBaseUrl = 'http://localhost:8080';
+                const response = await fetch(`${apiBaseUrl}/api/greet?name=${name}`);
+                const data = await response.json();
+                messageEl.textContent = data.message;
+                document.getElementById('name').value='';
+            } catch (error) {
+                console.log("error: ", error);
+                messageEl.textContent = "Failed to fetch greeting.";
+                messageEl.style.color = "red";
+            }
+        }
+    </script>
+</body>
+</html>

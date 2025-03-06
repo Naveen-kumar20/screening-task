@@ -120,7 +120,7 @@
                 messageEl.style.color = "#8686AC";
             }
             try {
-                const apiBaseUrl = 'http://localhost:8080';
+                const apiBaseUrl = 'https://screening-task-backend.onrender.com';
                 const response = await fetch(`${apiBaseUrl}/api/greet?name=${name}`);
                 const data = await response.json();
                 messageEl.textContent = data.message;
